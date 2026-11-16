@@ -7,12 +7,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Capa de acceso a datos (Repository Pattern).
  * Aísla toda la interacción con SQLite del resto de la aplicación.
  */
 public class ChatRepository {
+
+    private static final Logger LOGGER = Logger.getLogger(ChatRepository.class.getName());
 
     private Connection connection;
 
@@ -40,7 +43,12 @@ public class ChatRepository {
     /** Cierra la conexión. */
     public void close() {
         if (connection != null) {
-            try { connection.close(); } catch (SQLException ignored) {}
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // close fallido no debe tapar el error original
+                LOGGER.fine("close de SQLite falló: " + e.getMessage());
+            }
         }
     }
 

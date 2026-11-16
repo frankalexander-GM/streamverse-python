@@ -20,3 +20,6 @@ mini-services/chat-service-java/lib/*.jar
 mini-services/chat-service-java/build/
 *.class
 *.tsbuildinfo
+
+__pycache__/
+*.pyc
